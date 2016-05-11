@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatClient</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+    <div class="chatbox" id="chatbox">
+        <ul id="chatList" class="chat-list"></ul>
+        <input id="chatInput" type="text" class="chat-input" placeholder="Chat here..." maxlength="35" />
+    </div>
+    <div id="startMenu">
+        <input type="text" tabindex="0" autofocus placeholder="Enter your name here" id="userNameInput" maxlength="25" />
+        <b class="input-error">Nick must be alphanumeric characters only!</b>
+        <br />
+        <a><button id="startButton">Chat</button></a>
+    </div>
+    <script src="js/client.js"></script>
+</body>
+</html>
