@@ -19,7 +19,6 @@ div {
 
 
 .chatbox {
-    /*position: absolute;*/
     display: none;
     width: 300px;
     height: 320px;
@@ -30,6 +29,7 @@ div {
     pointer-events: none;
     border: 1px solid #CCC;
     margin: 10px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 .chatbox .chat-list {
