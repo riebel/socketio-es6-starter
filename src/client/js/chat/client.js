@@ -39,7 +39,7 @@ export default class ChatClient {
 
             } else {
                 // Allows for regular messages to be sent to the server.
-                this.socket.emit('userChat', { sender: this.nick, message: text });
+                this.socket.emit('userChat', { nick: this.nick, message: text });
                 this.addChatLine(this.nick, text, true);
             }
         }

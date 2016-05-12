@@ -25,16 +25,16 @@ class Client {
 
         if (validNick(nick)) {
             nickErrorText.style.opacity = 0;
-            this.userName = nick;
+            this.nick = nick;
         } else {
             nickErrorText.style.opacity = 1;
             return false;
         }
 
-        this.socket = io({query: "name=" + this.userName});
+        this.socket = io({query: "nick=" + this.nick});
         this.setupSocket();
 
-        this.chat = new ChatClient(this.socket, this.userName);
+        this.chat = new ChatClient(this.socket, this.nick);
         this.setupChat();
 
         document.getElementById('startMenu').style.display = 'none';
@@ -61,15 +61,15 @@ class Client {
         });
 
         this.socket.on('userDisconnect', (data) => {
-            this.chat.addSystemLine('<b>' + (data.name.length < 1 ? 'Anon' : data.name) + '</b> disconnected.');
+            this.chat.addSystemLine('<b>' + (data.nick.length < 1 ? 'Anon' : data.nick) + '</b> disconnected.');
         });
 
         this.socket.on('userJoin', (data) => {
-            this.chat.addSystemLine('<b>' + (data.name.length < 1 ? 'Anon' : data.name) + '</b> joined.');
+            this.chat.addSystemLine('<b>' + (data.nick.length < 1 ? 'Anon' : data.nick) + '</b> joined.');
         });
 
         this.socket.on('serverSendUserChat', (data) => {
-            this.chat.addChatLine(data.sender, data.message, false);
+            this.chat.addChatLine(data.nick, data.message, false);
         });
     }
 

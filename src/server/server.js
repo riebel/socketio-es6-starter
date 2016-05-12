@@ -15,24 +15,24 @@ server.use( compression( {} ) );
 server.use(express['static'](__dirname + '/../client'));
 
 io.on('connection', (socket) => {
-    let name = socket.handshake.query.name;
+    let nick = socket.handshake.query.nick;
 
     let currentUser = {
         id: socket.id,
-        name: name
+        nick: nick
     };
 
     if (findIndex(users, currentUser.id) > -1) {
         console.log('[INFO] User ID is already connected, kicking.');
         socket.disconnect();
-    } else if (!validNick(currentUser.name)) {
+    } else if (!validNick(currentUser.nick)) {
         socket.disconnect();
     } else {
-        console.log('[INFO] User ' + currentUser.name + ' connected!');
+        console.log('[INFO] User ' + currentUser.nick + ' connected!');
         sockets[currentUser.id] = socket;
         users.push(currentUser);
 
-        io.emit('userJoin', {name: currentUser.name});
+        io.emit('userJoin', {nick: currentUser.nick});
 
         console.log('[INFO] Total users: ' + users.length);
     }
@@ -43,19 +43,19 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         if (findIndex(users, currentUser.id) > -1) users.splice(findIndex(users, currentUser.id), 1);
-        console.log('[INFO] User ' + currentUser.name + ' disconnected!');
+        console.log('[INFO] User ' + currentUser.nick + ' disconnected!');
 
-        socket.broadcast.emit('userDisconnect', {name: currentUser.name});
+        socket.broadcast.emit('userDisconnect', {nick: currentUser.nick});
     });
 
     socket.on('userChat', (data) => {
-        let _sender = sanitizeString(data.sender);
+        let _nick = sanitizeString(data.nick);
         let _message = sanitizeString(data.message);
         let date = new Date();
         let time = ("0" + date.getHours()).slice(-2) + ("0" + date.getMinutes()).slice(-2);
         
-        console.log('[CHAT] [' + time + '] ' + _sender + ': ' + _message);
-        socket.broadcast.emit('serverSendUserChat', {sender: _sender, message: _message});
+        console.log('[CHAT] [' + time + '] ' + _nick + ': ' + _message);
+        socket.broadcast.emit('serverSendUserChat', {nick: _nick, message: _message});
     });
 });
 
