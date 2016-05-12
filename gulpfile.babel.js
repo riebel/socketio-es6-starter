@@ -33,6 +33,7 @@ gulp.task('build-shared', () =>
 gulp.task('watch', ['build'], () => {
     gulp.watch(['src/client/**/*.*'], ['build-client']);
     gulp.watch(['src/server/**/*.*'], ['build-server']);
+    gulp.watch(['src/shared/**/*.*'], ['build-server', 'build-client']);
     gulp.start('run');
 });
 
