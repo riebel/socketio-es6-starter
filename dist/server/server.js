@@ -6,16 +6,21 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _compression = require('compression');
+
+var _compression2 = _interopRequireDefault(_compression);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = (0, _express2.default)();
-var http = require('http').Server(app);
+var server = (0, _express2.default)();
+var http = require('http').Server(server);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 var users = [];
 var sockets = {};
 
-app.use(_express2.default['static'](__dirname + '/../client'));
+server.use(_express2.default['static'](__dirname + '/../client'));
+server.use((0, _compression2.default)({}));
 
 io.on('connection', function (socket) {
     var name = socket.handshake.query.name;

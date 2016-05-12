@@ -2,15 +2,17 @@
 
 import {validNick, findIndex, sanitizeString} from '../shared/util';
 import express from 'express';
+import compression from 'compression';
 
-let app = express();
-let http = require('http').Server(app);
+let server = express();
+let http = require('http').Server(server);
 let io = require('socket.io')(http);
 let port = process.env.PORT || 3000;
 let users = [];
 let sockets = {};
 
-app.use(express['static'](__dirname + '/../client'));
+server.use(express['static'](__dirname + '/../client'));
+server.use( compression( {} ) );
 
 io.on('connection', (socket) => {
     let name = socket.handshake.query.name;
