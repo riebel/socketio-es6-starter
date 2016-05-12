@@ -11,8 +11,8 @@ let port = process.env.PORT || 3000;
 let users = [];
 let sockets = {};
 
-server.use(express['static'](__dirname + '/../client'));
 server.use( compression( {} ) );
+server.use(express['static'](__dirname + '/../client'));
 
 io.on('connection', (socket) => {
     let name = socket.handshake.query.name;

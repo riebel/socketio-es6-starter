@@ -19,8 +19,8 @@ var port = process.env.PORT || 3000;
 var users = [];
 var sockets = {};
 
-server.use(_express2.default['static'](__dirname + '/../client'));
 server.use((0, _compression2.default)({}));
+server.use(_express2.default['static'](__dirname + '/../client'));
 
 io.on('connection', function (socket) {
     var name = socket.handshake.query.name;
